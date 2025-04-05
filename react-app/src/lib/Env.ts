@@ -1,0 +1,6 @@
+export const Env = {
+  COGNITO_CLIENT_ID: import.meta.env.VITE_COGNITO_CLIENT_ID,
+  COGNITO_AUTHORITY: import.meta.env.VITE_COGNITO_AUTHORITY,
+  COGNITO_REDIRECT_URI: import.meta.env.VITE_COGNITO_REDIRECT_URI,
+  COGNITO_DOMAIN: import.meta.env.VITE_COGNITO_DOMAIN,
+};

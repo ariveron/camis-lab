@@ -1,14 +1,15 @@
 import React from "react"
 import { useAuth } from "react-oidc-context"
+import { Env } from "../lib/Env";
 
 const Header: React.FC = () => {
-  // const [username, setUsername] = useState<string | null>(null);
   const auth = useAuth()
 
   const signOutRedirect = () => {
-    const clientId = "6rtm3untp0m1geb9cuva1m94t0"
-    const logoutUri = "https://camislab.com/"
-    const cognitoDomain = "https://us-east-1irrs98eac.auth.us-east-1.amazoncognito.com"
+    auth.removeUser();
+    const clientId = Env.COGNITO_CLIENT_ID;
+    const logoutUri = Env.COGNITO_REDIRECT_URI;
+    const cognitoDomain = Env.COGNITO_DOMAIN; 
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`
   }
 
@@ -25,14 +26,20 @@ const Header: React.FC = () => {
 
   const handleLogin = () => {
     auth.signinRedirect()
-    // setUsername("john.doe@example.com")
   };
 
   const handleLogout = () => {
-    // setUsername(null)
     signOutRedirect()
   };
 
+  if (auth.isAuthenticated) {
+    console.log(`
+      [AUTHENTICATED]
+      ID Token: ${auth.user?.id_token}
+      Access Token: ${auth.user?.access_token}
+      Refresh Token: ${auth.user?.refresh_token}
+    `);
+  }
   return (
     <header style={styles.header}>
       <div style={styles.logo}>Cami's Lab</div>

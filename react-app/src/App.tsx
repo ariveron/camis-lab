@@ -9,22 +9,7 @@ function App() {
   const [count, setCount] = useState(0)
   const auth = useAuth()
 
-  const signOutRedirect = () => {
-    const clientId = "6rtm3untp0m1geb9cuva1m94t0"
-    const logoutUri = "https://camislab.com/"
-    const cognitoDomain = "https://us-east-1irrs98eac.auth.us-east-1.amazoncognito.com"
-    window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`
-  }
-
-  // if (auth.isLoading) {
-  //   return <div>Loading...</div>
-  // }
-
-  // if (auth.error) {
-  //   return <div>Encountering error... {auth.error.message}</div>
-  // }
-
-  const body = (
+  return (
     <>
       <Header />
       <div>
@@ -47,30 +32,19 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <div>
-        <pre> Hello: {auth.user?.profile.email} </pre>
-        <pre> ID Token: {auth.user?.id_token} </pre>
-        <pre> Access Token: {auth.user?.access_token} </pre>
-        <pre> Refresh Token: {auth.user?.refresh_token} </pre>
-
-        <button onClick={() => auth.removeUser()}>Sign out</button>
-      </div>
+      {
+        auth.isAuthenticated 
+        ? (
+          <div>
+            <pre> Hello: {auth.user?.profile.email} </pre>
+            <pre> ID Token: {auth.user?.id_token} </pre>
+            <pre> Access Token: {auth.user?.access_token} </pre>
+            <pre> Refresh Token: {auth.user?.refresh_token} </pre>
+          </div>
+        ) : null
+      }
     </>
   );
-
-  if (auth.isAuthenticated) {
-    return body;
-  }
-
-  return (
-    <>
-      { body }
-      <div>
-        <button onClick={() => auth.signinRedirect()}>Sign in</button>
-        <button onClick={() => signOutRedirect()}>Sign out</button>
-      </div>
-    </>
-  )
 }
 
 export default App
