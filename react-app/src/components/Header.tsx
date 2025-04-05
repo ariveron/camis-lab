@@ -2,7 +2,7 @@ import React from "react"
 import { useAuth } from "react-oidc-context"
 import { Env } from "../lib/Env";
 
-const Header: React.FC = () => {
+export const Header = () => {
   const auth = useAuth()
 
   const signOutRedirect = () => {
@@ -91,5 +91,3 @@ const styles: { [key: string]: React.CSSProperties } = {
     transition: "background-color 0.2s ease-in-out",
   },
 };
-
-export default Header
